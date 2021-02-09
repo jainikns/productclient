@@ -1,0 +1,62 @@
+{
+  "provider": {
+    "name": "pactprovider"
+  },
+  "consumer": {
+    "name": "pactconsumer"
+  },
+  "interactions": [
+    {
+      "description": "A request to v1/products/1",
+      "request": {
+        "method": "GET",
+        "path": "v1/products/1"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "body": {
+          "name": "Product name for Demo"
+        },
+        "matchingRules": {
+          "body": {
+            "$.name": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            }
+          },
+          "header": {
+            "Content-Type": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "application/json(;\\s?charset=[\\w\\-]+)?"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        }
+      },
+      "providerStates": [
+        {
+          "name": "Product 1 exists"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "3.0.0"
+    },
+    "pact-jvm": {
+      "version": "4.0.7"
+    }
+  }
+}

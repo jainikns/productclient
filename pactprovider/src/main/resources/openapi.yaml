@@ -1,0 +1,53 @@
+# OpenAPI 3
+openapi: 3.0.2
+
+# This section will contain metadata information about the API. It will be shown on the editor/UI when we publish this
+info:
+  title: Product API
+  version: 1.0.0
+  description: API specification to support daily product list operations
+
+# The list of the servers that we can use to use the API. This will be rendered as a combo box in the editor/UI when we publish it, so the user could pick and use the endpoint they prefer.
+servers:
+  - url: http://dev.productAPI.com/v1
+    description: DEV-ENV
+
+paths:
+  /products/{productId}:
+    get:
+      operationId: getProduct
+      tags:
+        - Products
+      description: retrieve a product by id
+      parameters:
+        - name: productId
+          in: path
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+            example: 1
+          required: true
+          allowEmptyValue: false
+      responses:
+        200:
+          description: the specific product successfully retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+
+components:
+  schemas:
+    ProductResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: unique id of the product for the identifier
+          example: 1
+        name:
+          type: string
+          description: the name of the product
+          example: To-do Application Development
